@@ -78,17 +78,17 @@ function previouse_directry (){
 function setup_environment() {
     local OUTPUT_DIR="output"
     if [ -d "$OUTPUT_DIR" ]; then
-        echo -e "${BOLD_CYAN}[!]${RESET}${BOLD_WHITE} Output directory already exists: $OUTPUT_DIR ${RESET}"
+        echo -e "${BOLD_CYAN}      [!]${RESET}${BOLD_WHITE} Output directory already exists: $OUTPUT_DIR ${RESET}"
         return 0
     fi
 
     mkdir -p "$OUTPUT_DIR"
-    echo -e "${BOLD_YELLOW}[~]${RESET} ${BOLD_WHITE}Created output directory: $OUTPUT_DIR ${RESET}"
+    echo -e "${BOLD_YELLOW}      [~]${RESET} ${BOLD_WHITE}Created output directory: $OUTPUT_DIR ${RESET}"
     return 0
 }
 
 function dumpster() {
-    echo -e "${BOLD_GREEN}[~] ${RESET}${BOLD_WHITE}Querying DNS Dumpster${RESET}"
+    echo -e "${BOLD_GREEN}      [~] ${RESET}${BOLD_WHITE}Querying DNS Dumpster${RESET}"
     rm -f "$INPUT_FILE"  # Use correct file path
 
     export api_key=$DNS_DUMPSTER_API
@@ -130,15 +130,15 @@ function extract_from_dumpster() {
     
     printf "%s\n" "${!domains[@]}" | sort >> "output/dumpster.txt"
 
-    echo -e "${BOLD_CYAN}[&]${RESET}${BOLD_WHITE} Subdomains from DNS Dumpster: ${BOLD_YELLOW}$(wc -l < "output/dumpster.txt")${RESET}"
+    echo -e "${BOLD_CYAN}      [&]${RESET}${BOLD_WHITE} Subdomains from DNS Dumpster: ${BOLD_YELLOW}$(wc -l < "output/dumpster.txt")${RESET}"
     rm "output/data.json"
 }
 
 function crtsh() {
-    echo -e "${BOLD_GREEN}[~]${RESET} ${BOLD_WHITE}Querying crt.sh...${RESET}"
+    echo -e "${BOLD_GREEN}      [~]${RESET} ${BOLD_WHITE}Querying crt.sh...${RESET}"
     local response=$(curl -s "https://crt.sh/?q=%25.$domains&output=json")
     echo "$response" | jq -r '.[].name_value' 2>/dev/null | sed 's/\*\.//g' >> "output/crtsh.txt"
-    echo -e "${BOLD_CYAN}[~]${RESET}${BOLD_WHITE} Subdomains from crtsh${BOLD_YELLOW} : $(wc -l < "output/crtsh.txt")${RESET}" 
+    echo -e "${BOLD_CYAN}      [~]${RESET}${BOLD_WHITE} Subdomains from crtsh${BOLD_YELLOW} : $(wc -l < "output/crtsh.txt")${RESET}" 
 
 
 }
@@ -147,9 +147,9 @@ function crtsh() {
 
 function subfinder_ (){
     
-    echo -e "${BOLD_GREEN}[~]${RESET}${BOLD_WHITE} Subfinder is running ${RESET}"
+    echo -e "${BOLD_GREEN}      [~]${RESET}${BOLD_WHITE} Subfinder is running ${RESET}"
     subfinder -d $domains -silent >> "$CURRENT_PATH/output/subfinder.txt" 
-    echo -e "${BOLD_CYAN}[&]${RESET}${BOLD_WHITE} Subfinder${BOLD_YELLOW}$(wc -l < "$CURRENT_PATH/output/subfinder.txt")${RESET}"
+    echo -e "${BOLD_CYAN}      [&]${RESET}${BOLD_WHITE} Subfinder${BOLD_YELLOW}$(wc -l < "$CURRENT_PATH/output/subfinder.txt")${RESET}"
 
 
 
@@ -157,18 +157,18 @@ function subfinder_ (){
 
 function assetfinder_ (){
     
-    echo -e "${BOLD_GREEN}[~]${RESET}${BOLD_WHITE} Assetfinder is running  ${RESET}"
+    echo -e "${BOLD_GREEN}      [~]${RESET}${BOLD_WHITE} Assetfinder is running  ${RESET}"
     assetfinder -subs-only $domains | sort -u > "$CURRENT_PATH/output/assetfinder.txt"
-    echo -e "${BOLD_CYAN}[&]${RESET}${BOLD_WHITE} Assetfinder${BOLD_YELLOW} $(wc -l < "$CURRENT_PATH/output/assetfinder.txt")${RESET}"
+    echo -e "${BOLD_CYAN}      [&]${RESET}${BOLD_WHITE} Assetfinder${BOLD_YELLOW} $(wc -l < "$CURRENT_PATH/output/assetfinder.txt")${RESET}"
 
 }
 
 
 function findomain_ (){
     
-    echo -e "${BOLD_GREEN}[~]${RESET}${BOLD_WHITE} Findomain is running  ${RESET}"
-    findomain -t $domains -q -u "$CURRENT_PATH/output/findomain.txt"
-    echo -e "${BOLD_CYAN}[&]${RESET}${BOLD_WHITE} Findomains ${BOLD_YELLOW} $(wc -l < "$CURRENT_PATH/output/findomain.txt")${RESET}"
+    echo -e "${BOLD_GREEN}      [~]${RESET}${BOLD_WHITE} Findomain is running  ${RESET}"
+    findomain -t $domains -q >> "$CURRENT_PATH/output/findomain.txt"
+    echo -e "${BOLD_CYAN}      [&]${RESET}${BOLD_WHITE} Findomains ${BOLD_YELLOW} $(wc -l < "$CURRENT_PATH/output/findomain.txt")${RESET}"
 
 }
 
@@ -198,7 +198,7 @@ function main() {
     dumpster
     extract_from_dumpster
 
-    echo -e "${BOLD_YELLOW}[+] Done !${RESET} "
+    echo -e "${BOLD_YELLOW}     [+] Done !${RESET} "
 
 
 
