@@ -2,6 +2,8 @@
 #!/bin/bash
 
 
+
+
 # Reset variable
 RESET='\033[0m'
 # Regular Colors
