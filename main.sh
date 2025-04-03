@@ -27,9 +27,9 @@ BOLD_WHITE='\033[1;37m'
 
 # GLOBAL VARIABLES
 BANNER="
-┏┓┓   ┓ 
-┗┓┃┏┓┏┃┏
-┗┛┗┗┛┗┛┗
+     ┏┓┓   ┓ 
+     ┗┓┃┏┓┏┃┏
+     ┗┛┗┗┛┗┛┗
 "
            
 INPUT_FILE="output/data.json"
@@ -68,7 +68,7 @@ function previouse_directry (){
 
     if [ -d "$directory" ]; then
         echo -e "${BOLD_YELLOW}"
-        read -p "Did you want to remove the previouce output (y/n) : " answer
+        read -p "     Did you want to remove the previouce output (y/n) : " answer
         echo -e "${RESET}"
         if [ "$answer" != "n" ]; then
             rm -rf "$directory"
@@ -196,11 +196,12 @@ function main() {
     assetfinder_ # assetfinder
     findomain_ # findomain
 
+
     crtsh
     dumpster
     extract_from_dumpster
 
-    echo -e "${BOLD_YELLOW}     [+] Done !${RESET} "
+    echo -e "${BOLD_YELLOW}      [+] Done !${RESET} "
 
 
 
