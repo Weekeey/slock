@@ -35,13 +35,10 @@ BANNER="
 INPUT_FILE="output/data.json"
 CURRENT_PATH=$(pwd)
 
+# Load configuration
+CONFIG_FILE="config/config.yaml"
 # ADD API KEYS HERE
-DNS_DUMPSTER_API=""
-PUBLICW_API=""
-
-
-
-
+DNS_DUMPSTER_API=$(yq '.dnsdump' "$CONFIG_FILE")
 domains=$1
 
 
