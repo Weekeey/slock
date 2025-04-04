@@ -63,13 +63,15 @@ domains=$1
 
 
 function previouse_directry (){
+    echo -e "${BOLD_RED}     [$] Target > ${RESET}$domains"
     
     local directory="$CURRENT_PATH/output/"
 
     if [ -d "$directory" ]; then
-        echo -e "${BOLD_YELLOW}"
-        read -p "     Did you want to remove the previouce output (y/n) : " answer
-        echo -e "${RESET}"
+        #echo -e "${BOLD_YELLOW}"
+        read -p "$(echo -e "${BOLD_YELLOW}     Did you want to remove the previous output (y/n) : ${RESET}")" answer
+        #read -p "     Did you want to remove the previouce output (y/n) : " answer
+        #echo -e "${RESET}"
         if [ "$answer" != "n" ]; then
             rm -rf "$directory"
         fi
@@ -132,7 +134,7 @@ function extract_from_dumpster() {
     
     printf "%s\n" "${!domains[@]}" | sort >> "output/dumpster.txt"
 
-    echo -e "${BOLD_CYAN}      [&]${RESET}${BOLD_WHITE} Subdomains from DNS Dumpster: ${BOLD_YELLOW}$(wc -l < "output/dumpster.txt")${RESET}"
+    echo -e "${BOLD_CYAN}          ↳${RESET}${BOLD_WHITE} Subdomains from DNS Dumpster: ${BOLD_YELLOW}$(wc -l < "output/dumpster.txt")${RESET}"
     rm "output/data.json"
 }
 
@@ -140,7 +142,7 @@ function crtsh() {
     echo -e "${BOLD_GREEN}      [~]${RESET} ${BOLD_WHITE}Querying crt.sh...${RESET}"
     local response=$(curl -s "https://crt.sh/?q=%25.$domains&output=json")
     echo "$response" | jq -r '.[].name_value' 2>/dev/null | sed 's/\*\.//g' >> "output/crtsh.txt"
-    echo -e "${BOLD_CYAN}      [~]${RESET}${BOLD_WHITE} Subdomains from crtsh${BOLD_YELLOW} : $(wc -l < "output/crtsh.txt")${RESET}" 
+    echo -e "${BOLD_CYAN}          ↳${RESET}${BOLD_WHITE} Subdomains from crtsh${BOLD_YELLOW} : $(wc -l < "output/crtsh.txt")${RESET}" 
 
 
 }
@@ -151,7 +153,7 @@ function subfinder_ (){
     
     echo -e "${BOLD_GREEN}      [~]${RESET}${BOLD_WHITE} Subfinder is running ${RESET}"
     subfinder -d $domains -silent >> "$CURRENT_PATH/output/subfinder.txt" 
-    echo -e "${BOLD_CYAN}      [&]${RESET}${BOLD_WHITE} Subfinder${BOLD_YELLOW}$(wc -l < "$CURRENT_PATH/output/subfinder.txt")${RESET}"
+    echo -e "${BOLD_CYAN}          ↳${RESET}${BOLD_WHITE} Subfinder${BOLD_YELLOW}$(wc -l < "$CURRENT_PATH/output/subfinder.txt")${RESET}"
 
 
 
@@ -161,7 +163,7 @@ function assetfinder_ (){
     
     echo -e "${BOLD_GREEN}      [~]${RESET}${BOLD_WHITE} Assetfinder is running  ${RESET}"
     assetfinder -subs-only $domains | sort -u > "$CURRENT_PATH/output/assetfinder.txt"
-    echo -e "${BOLD_CYAN}      [&]${RESET}${BOLD_WHITE} Assetfinder${BOLD_YELLOW} $(wc -l < "$CURRENT_PATH/output/assetfinder.txt")${RESET}"
+    echo -e "${BOLD_CYAN}          ↳${RESET}${BOLD_WHITE} Assetfinder${BOLD_YELLOW} $(wc -l < "$CURRENT_PATH/output/assetfinder.txt")${RESET}"
 
 }
 
@@ -170,7 +172,7 @@ function findomain_ (){
     
     echo -e "${BOLD_GREEN}      [~]${RESET}${BOLD_WHITE} Findomain is running  ${RESET}"
     findomain -t $domains -q >> "$CURRENT_PATH/output/findomain.txt"
-    echo -e "${BOLD_CYAN}      [&]${RESET}${BOLD_WHITE} Findomains ${BOLD_YELLOW} $(wc -l < "$CURRENT_PATH/output/findomain.txt")${RESET}"
+    echo -e "${BOLD_CYAN}          ↳${RESET}${BOLD_WHITE} Findomains ${BOLD_YELLOW} $(wc -l < "$CURRENT_PATH/output/findomain.txt")${RESET}"
 
 }
 
